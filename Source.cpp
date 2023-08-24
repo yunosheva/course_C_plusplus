@@ -4,260 +4,123 @@
 #include <ctime>
 using namespace std;
 
-template< typename T>
-void foo(T &a, T &b ) {
-	T buf;
-	buf = a;
-	a = b;
-	b = buf;
+void FillArray(int* const arr, const int size) 
+{
+	for (int i = 0; i < size; i++) {
+		arr[i] = rand() % 10;
+	}
 }
 
-int foo1(int a) {
-	a = 2;
-	return a;
+void ShowArray(const int* const arr, const int size)
+{
+	for (int i = 0; i < size; i++) {
+		cout << arr[i] << "\t";
+	}
+	cout << endl;
 }
 
-int Kroneker(int a, int b) {
-	int number;
-	if (a == b) {
-		number = 1.;
+void push_back(int*& arr, int &size, const int value) 
+{
+	int* newArr = new int[size + 1];
+	for (int i = 0; i < size; i++) {
+		newArr[i] = arr[i];
+	}
+	newArr[size] = value;
+	size++;
+	delete[] arr;
+	arr = newArr;
+}
+
+void pop_back(int*& arr, int &size) 
+{
+	size--;
+	int* newArr = new int[size];
+	for (int i = 0; i < size; i++) {
+		newArr[i] = arr[i];
+	}
+	delete[] arr;
+	arr = newArr;
+}
+
+void insert_beg(int*& arr, int& size, const int value) {
+	size++;
+	int* newArr = new int[size];
+	for (int i = 1; i < size; i++) {
+		newArr[i] = arr[i - 1];
+	}
+	newArr[0] = value;
+	delete[] arr;
+	arr = newArr;
+}
+
+void erase_beg(int*& arr, int& size) {
+	size--;
+	int* newArr = new int[size];
+	for (int i = 1; i < size + 1; i++) {
+		newArr[i - 1] = arr[i];
+	}
+	delete[] arr;
+	arr = newArr;
+}
+
+void insert(int*& arr, int& size, const int value, const int number) {
+	if (number > size + 1) {
+		std::cout << "Это число больше размера массива." << std::endl;
+	}
+	if (number <= 0) {
+		std::cout << "Число меньше нуля." << std::endl;
 	}
 	else {
-		number = 0.;
+		size++;
+		int* newArr = new int[size];
+		for (int i = 0; i < size; i++) {
+			if (i > number - 1) {
+				newArr[i] = arr[i - 1];
+				continue;
+			}
+			newArr[i] = arr[i];
+		}
+		newArr[number - 1] = value;
+		delete[] arr;
+		arr = newArr;
 	}
-	return number;
+}
+
+void erase(int*& arr, int& size, const int number) {
+	size--;
+	int* newArr = new int[size];
+	if (number > size + 1)
+		std::cout << " Число больше размера массива. " << std::endl;
+	if (number <= 0) {
+		std::cout << " Число меньше нуля. " << std::endl;
+	}
+	for (int i = 0; i < size + 1; i++) {
+		if (number - 1 < i)
+		{
+			newArr[i - 1] = arr[i];
+			continue;
+		}
+		newArr[i] = arr[i];
+	}
+	delete[] arr;
+	arr = newArr;
 }
 
 int main() {
-
-	/*int a = 5;
-	int* pa = &a;
-	int& aRef = a;
-	int* paRef = &aRef;
-
-	cout << "a = " << a << endl;
-	cout << "pa = " << pa << endl;
-	cout << "&paRef = " << &paRef << endl;
-	cout << "aRef = " << &aRef << endl;*/
-
 	setlocale(LC_ALL, "Rus");
-	//cout << "\t Среди других играющих детей \n \t Она напоминает лягушонка \n \t Заправлена в трусы худая рубашонка \n \t Колечки рыжеватые кудрей рассыпаны \n\n\n";
+	int SIZE = 10;
+	int* arr = new int[SIZE];
+	FillArray(arr, SIZE);
+	ShowArray(arr, SIZE);
+	push_back(arr, SIZE, 20);
+	ShowArray(arr, SIZE);
+	pop_back(arr, SIZE);
+	ShowArray(arr, SIZE);
 
-	/*int var1, var2, var3;
-
-	cout << "Введите три числа: " << endl;
-	cin >> var1 >> var2 >> var3;
-
-	cout << " Значение суммы = " << var1 + var2 + var3 << endl;
-	cout << "Значение произведения = " << var1 * var2 * var3 << endl;
-	double middle = (double)(var1 + var2 + var3) / 3;
-	cout << "Значение среднего арифметического = " << middle << endl;
-
-	
-	int number;
-	cout << "Введите число: " << endl;
-	cin >> number;
-	cout << endl;
-
-	if (number % 2 == 0) {
-		cout << "Число четное." << endl;
-	} else cout << "Число нечетное." << endl;*/
-
-	/*int num1, num2;
-
-	cout << "Введите первое число: " << endl;
-	cin >> num1;
-	cout << endl;
-
-	cout << "Введите второе число: " << endl;
-	cin >> num2;
-	cout << endl;
-
-	int var;
-	cout << " Напишите 1, если хотите сложить числа. " << endl;
-	cout << " Напишите 2, если хотите вычесть числа. " << endl;
-	cout << " Напишите 3, если хотите умножить числа. " << endl;
-	cout << " Напишите 4, если хотите разделить числа. " << endl;
-	cin >> var;
-	cout << endl;
-
-	switch (var) {
-
-	case 1: {
-		cout << num1 + num2;
-	}
-	break;
-
-	case 2: {
-		cout << num1 - num2;
-	}
-	break;
-
-	case 3: {
-		cout << num1 * num2;
-	}
-	break;
-
-	case 4: {
-		cout << (double)num1 /num2;
-	}
-	break;
-	}*/
-
-	/*int numSimb, orientation, i = 0;
-	char simb;
-
-	cout << "Введите число символов: " << endl;
-
-	cin >> numSimb;
-
-	cout << "Введите 1, если линия должна быть вертикальной, и 2, если горизонтальной. " << endl;
-
-	cin >> orientation;
-
-	cout << "Введите символ: ";
-
-	cin >> simb;
-
-	cout << endl;
-
-	if (orientation == 1) {
-		while (i < numSimb) {
-			cout << simb << endl;
-			i++;
-		}
-	}
-	else {
-		while (i < numSimb) {
-			cout << simb;
-			i++;
-		}
-	}*/
-
-	/*int begin, end, sum = 0;
-
-	cout << "Введите начало и конец диапазона: " << endl;
-	cin >> begin;
-	cout << endl;
-	cin >> end;
-
-	while (begin < end) {
-		if (begin % 2 != 0)
-			sum += begin;
-		begin++;
-		
-	}
-
-	cout << "Сумма нечетных чисел из этого диапазона равна " << sum << endl;*/
-
-	// заполнение массива рандомными числами, которые не повторяются
-	/*srand(time(NULL));
-	const int SIZE = 10;
-	int arr[SIZE];
-	
-	bool alreadyThere;
-	for (int i = 0; i < SIZE; ) {
-		alreadyThere = false;
-		int random = rand() % 20;
-		for (int j = 0; j < i; j++) {
-			if (arr[j] == random) {
-				alreadyThere = true;
-				break;
-			}
-		}
-		if (!alreadyThere) {
-			arr[i] = random;
-			i++;
-		}
-	}
-
-	int min = 21;
-	for (int i = 0; i < SIZE; i++) {
-		std::cout << arr[i] << std::endl;
-		if (arr[i] < min) {
-			min = arr[i];
-		}
-	}
-
-	std::cout << " minimum = " << min;*/
-
-	/* //это моя попытка, выше - решение с канала
-	for (int i = 0; i < SIZE; i++) {
-		arr[i] = rand() % 10;
-	}
-
-	int count = 0;
-
-	for (int i = 0; i < SIZE; i++) {
-		for (int j = i + 1; j < SIZE; j++) {
-			if (arr[i] == arr[j] && i != j) {
-				count++;
-			}
-		}
-	}
-
-	while (count != 0) {
-		for (int i = 0; i < SIZE; i++) {
-			for (int j = 0; j < SIZE; j++) {
-				if (arr[i] == arr[j] && i != j) {
-					do {
-						arr[j] = rand() % 10;
-						for (int k = 0; k < j; k++) {
-							if (arr[k] == arr[j]) {
-								arr[j] = rand() % 10;
-							}
-						}
-					} while (arr[i] == arr[j] && i != j);
-				}
-			}
-		}
-		count = 0;
-		for (int i = 0; i < SIZE; i++) {
-			for (int j = i + 1; j < SIZE; j++) {
-				if (arr[i] == arr[j]) {
-					count++;
-				}
-			}
-		}
-	}*/
-
-	/*double M[2][2]{ {1, 2}, {3, 4} };
-	double d[2] = { 1, 1 };
-	double rez[2][2];
-	double Diag[2][2];
-	for (int i = 0; i < 2; i++) {
-		for (int j = 0; j < 2; j++) {
-			Diag[i][j] = 0.0;
-			rez[i][j] = 0.;
-		}
-	}
-
-	for (int i = 0; i < 2; i++) {
-		Diag[i][i] = d[i];
-	}
-
-	for (int i = 0; i < 2; i++) {
-		for (int j = 0; j < 2; j++) {
-			for (int l = 0; l < 2; l++) {
-				rez[i][j] += M[l][j] * Diag[i][l];
-			}
-		}
-	}
-	rez[0][0] = 0.;
-	rez[1][0] = 0.;
-	for (int i = 0; i < 2; i++) {
-		for (int j = 0; j < 2; j++) {
-			rez[i][0] += M[i][j] * d[j];
-		}
-	}
-	for (int i = 0; i < 2; i++) {
-		for (int j = 0; j < 2; j++) {
-			cout << rez[i][j] << "\t";
-		}
-		cout << endl;
-	}*/
-
-	
+	insert(arr, SIZE, 14, 11);
+	ShowArray(arr, SIZE);
+	erase(arr, SIZE, 1);
+	ShowArray(arr, SIZE);
 	
 	return 0;
 }
